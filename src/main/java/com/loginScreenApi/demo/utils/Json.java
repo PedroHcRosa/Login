@@ -1,4 +1,4 @@
-package com.loginScreenApi.utils;
+package com.loginScreenApi.demo.utils;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,8 +1,8 @@
-package com.loginScreenApi.model;
+package com.loginScreenApi.demo.model;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.loginScreenApi.repository.UsersRepository;
+import com.loginScreenApi.demo.repository.UsersRepository;
 
 public class UsuariosService {
 

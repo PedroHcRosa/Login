@@ -1,4 +1,4 @@
-package com.loginScreenApi.msgcontroller;
+package com.loginScreenApi.demo.controller;
 
 public class ReqUser {
 

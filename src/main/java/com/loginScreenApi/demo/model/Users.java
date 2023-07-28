@@ -1,4 +1,4 @@
-package com.loginScreenApi.model;
+package com.loginScreenApi.demo.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,7 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "usuarios")
+@Table(name = "clients")
 public class Users {
 
 

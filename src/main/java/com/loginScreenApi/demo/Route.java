@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.loginScreenApi.msgcontroller.ReqUser;
-import com.loginScreenApi.utils.Json;
+import com.loginScreenApi.demo.controller.ReqUser;
+import com.loginScreenApi.demo.utils.Json;
 
 
 
