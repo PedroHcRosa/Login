@@ -38,14 +38,24 @@ public class Users {
 		this.usuario = usuario;
 	}
 
-	public String getSenha() {
+	public String getPassword() {
 		return senha;
 	}
 
-	public void setSenha(String senha) {
+	public void setPassword(String senha) {
 		this.senha = senha;
 	}
-	  
+
+	public Users(String usuario, String senha) {
+		super();
+		this.usuario = usuario;
+		this.senha = senha;
+	}
+
+	public Users() {
+		
+		super();
+	}
 	  
 	  
 }
