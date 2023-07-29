@@ -16,6 +16,9 @@ import com.loginScreenApi.demo.model.UsuariosService;
 import com.loginScreenApi.demo.utils.CrudUtils;
 import com.loginScreenApi.demo.utils.Json;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
 
 
 @RestController
@@ -52,18 +55,36 @@ public class Route {
 			
 		}
 		
-			
-			
-			
-		
-		
-		
-		return ResponseEntity.ok().body(json.toJson());
+			return ResponseEntity.ok().body(json.toJson());
 		
 	}
 	
 
+
+
+
+	@PostMapping("v1/login")
+	public ResponseEntity<?> login(@RequestBody ReqUser req, HttpServletRequest http) {
+		
+		HttpSession session = http.getSession();
+		List<Users> ressUsers = usersService.findByUsuario(req.getUser());
+		Json json = new Json();
+		
+		try {
+			CrudUtils.auth(ressUsers, req.getUser(), req.getPassword(), session);
+			json.put("Status", true);
+			json.put("Logado", true);
+		
+		} catch (Exception e) {
+			
+			json.put("Status", e.getMessage());
+		}
+		
+		return ResponseEntity.ok().body(json.toJson());
+	}
+
 }
+
 
 
 
