@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.loginScreenApi.demo.Exception.RessposseException;
 import com.loginScreenApi.demo.controller.ReqUser;
+import com.loginScreenApi.demo.controller.Reqmsg;
+import com.loginScreenApi.demo.model.Msg;
+import com.loginScreenApi.demo.model.MsgService;
 import com.loginScreenApi.demo.model.Users;
 import com.loginScreenApi.demo.model.UsuariosService;
 import com.loginScreenApi.demo.utils.CrudUtils;
@@ -24,14 +27,29 @@ import jakarta.servlet.http.HttpSession;
 @RestController
 public class Route {
 	
+	
+	
 	@Autowired
 	private UsuariosService usersService;
 	
+	@Autowired
+	private MsgService msgService;
+	
 	
 	@GetMapping("/")
-	public ResponseEntity<?> index() {
-		
+	public ResponseEntity<?> index(HttpServletRequest http) {
+		HttpSession session = http.getSession();
 		Json json = new Json();
+		json.put("Status", session.getAttribute("Logado"));
+		return ResponseEntity.ok().body(json.toJson());
+		
+	}
+	
+	@GetMapping("/logout")
+	public ResponseEntity<?> logOut(HttpServletRequest http) {
+		HttpSession session = http.getSession();
+		Json json = new Json();
+		session.invalidate();
 		json.put("Status", true);
 		return ResponseEntity.ok().body(json.toJson());
 		
@@ -59,7 +77,28 @@ public class Route {
 		
 	}
 	
-
+	@PostMapping("v1/sendmsg")
+	public ResponseEntity<?> sendmsg(@RequestBody Reqmsg req, HttpServletRequest http) {
+		Json json = new Json();
+		HttpSession session = http.getSession();
+		try {
+			
+			CrudUtils.isLogado(http);
+			List<Msg> ress = msgService.findBytitulo(req.getTitulo());
+			CrudUtils.addVerify(ress, "msg ja cadastrada");
+			Msg msg = new Msg(session.getAttribute("nome").toString(), req.getTitulo(), req.getPost());
+			MsgService msgService2 = new MsgService();
+			msgService2.insert(msg);
+			json.put("Status", true);
+		
+		} catch (Exception e) {
+			
+			json.put("status", e.getMessage());
+			
+		}
+		
+		return ResponseEntity.ok().body(json.toJson());
+	}
 
 
 
@@ -78,6 +117,7 @@ public class Route {
 		} catch (Exception e) {
 			
 			json.put("Status", e.getMessage());
+			
 		}
 		
 		return ResponseEntity.ok().body(json.toJson());

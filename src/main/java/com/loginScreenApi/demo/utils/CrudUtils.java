@@ -5,6 +5,7 @@ import java.util.List;
 import com.loginScreenApi.demo.Exception.RessposseException;
 import com.loginScreenApi.demo.model.Users;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 public class CrudUtils {
@@ -31,6 +32,7 @@ public class CrudUtils {
 		if(user.get(0).getUsuario().equals(reqUser) && user.get(0).getPassword().equals(senha)) {
 			
 			sessio.setAttribute("logado", true);
+			sessio.setAttribute("nome", user.get(0).getUsuario());
 			
 			
 		} else {
@@ -39,6 +41,25 @@ public class CrudUtils {
 			
 		}
 	
+		
+	}
+
+	public static void isLogado(HttpServletRequest http) throws RessposseException {
+		
+		HttpSession session = http.getSession();
+		
+		if(session.getAttribute("Logado") == null) {
+			
+			throw new RessposseException("Sua sessão expirou, faça login novamente");
+			
+		}
+		
+		if(!(boolean)session.getAttribute("logado")) {
+			
+			
+			throw new RessposseException("Sua sessão expirou, faça login novamente");
+			
+		}
 		
 	}
 	
