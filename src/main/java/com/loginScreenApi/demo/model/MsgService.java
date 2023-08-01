@@ -26,6 +26,12 @@ public class MsgService {
 		
 	}
 	
+	public List<Msg> findAll() {
+		
+		return msgRepository.findAll();
+		
+	}
+	
 	
 	
 }

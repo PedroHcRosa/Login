@@ -35,6 +35,33 @@ public class Route {
 	@Autowired
 	private MsgService msgService;
 	
+	@GetMapping("v1/getmsg") 
+	public ResponseEntity<?> getmsg(HttpServletRequest http) {
+		HttpSession session = http.getSession();
+		Json json = new Json();
+		
+		try {
+			
+			CrudUtils.isLogado(http);
+			List<Msg> ress = msgService.findAll();
+			
+			json.put("usuario", session.getAttribute("nome"));
+			json.put("ObjectList", CrudUtils.JsonObjectList(ress).toString());
+			
+		} catch(Exception e) {
+			
+			json.put("Status", e.getMessage());
+			
+		}
+		
+		
+		
+		
+		
+		return ResponseEntity.ok().body(json.toJson());
+	}
+	
+	
 	
 	@GetMapping("/")
 	public ResponseEntity<?> index(HttpServletRequest http) {

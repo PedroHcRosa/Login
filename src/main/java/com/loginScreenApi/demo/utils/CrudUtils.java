@@ -1,8 +1,10 @@
 package com.loginScreenApi.demo.utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.loginScreenApi.demo.Exception.RessposseException;
+import com.loginScreenApi.demo.model.Msg;
 import com.loginScreenApi.demo.model.Users;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -62,5 +64,23 @@ public class CrudUtils {
 		}
 		
 	}
-	
+
+	public static List<String> JsonObjectList(List<Msg> lista) {
+		
+		List<String> ListJson = new ArrayList<>();
+		
+		
+		for(Msg msg: lista) {
+			
+			
+			Json json = new Json();
+			json.put("id", msg.getId());
+			json.put("usuario", msg.getUsuario());
+			json.put("titulo", msg.getTitulo());
+			json.put("post", msg.getPost());
+			ListJson.add(json.toJson());
+		}
+		
+		return ListJson;
+	}
 }
